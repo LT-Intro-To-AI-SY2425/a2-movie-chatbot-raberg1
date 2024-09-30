@@ -33,12 +33,22 @@ def match(pattern: List[str], source: List[str]) -> List[str]:
         # If you get stuck on this one, we encourage you to attempt the other conditions
         #   and come back to this one afterwards
         elif pattern[pind] == '%':
-            if pind + 1 == len(pattern):
+            if pind == len(pattern) - 1:
                 combined = ' '.join(source[sind:])
-                result.append(combined)
+                # result.append(combined)
+                result += [combined]
                 return result
             else:
-                return None # placeholder, fix later
+                pind += 1
+                accum = ""
+                while source[sind] != pattern[pind]:
+                    accum += source[sind] + " "
+                    sind += 1
+                    # print(accum)
+                    
+                    if sind >= len(source):
+                        return None
+                result.append(accum.rstrip())
             
         # 3) if we reached the end of the source but not the pattern
         elif sind == len(source) and pind < len(pattern):
